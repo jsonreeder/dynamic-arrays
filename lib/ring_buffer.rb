@@ -40,11 +40,17 @@ class RingBuffer
   # O(1)
   # Remove
   def shift
+    shifted_value = self[0]
+    @length -= 1
+    shifted_value
   end
 
   # O(1) ammortized
   # Add
   def unshift(val)
+    @length += 1
+    self[-1] = val
+    @start_idx -= 1
   end
 
   protected
