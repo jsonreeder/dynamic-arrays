@@ -42,6 +42,7 @@ class RingBuffer
   def shift
     shifted_value = self[0]
     @length -= 1
+    @start_idx += 1
     shifted_value
   end
 
