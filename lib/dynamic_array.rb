@@ -5,6 +5,7 @@ class DynamicArray
 
   def initialize
     @length = 0
+    @capacity = 0
     @store = StaticArray.new(@length)
   end
 
@@ -24,11 +25,27 @@ class DynamicArray
   # O(1)
   def pop
     raise 'index out of bounds' if @length.zero?
+    popped_item = @store[length - 1]
+    @store[length - 1] = nil
+    @length -= 1
+    popped_item
   end
 
   # O(1) ammortized; O(n) worst case. Variable because of the possible
   # resize.
   def push(val)
+    # Check capacity, resize if necessary
+    if @length == @capacity
+      new_store = StaticArray.new(@capacity * 2)
+      @length.times do |idx|
+        new_store[idx] = @store[idx]
+      end
+      @store = new_store
+      @capacity *= 2
+    end
+
+    @store[@length] = val
+    @length += 1
   end
 
   # O(n): has to shift over all the elements.
