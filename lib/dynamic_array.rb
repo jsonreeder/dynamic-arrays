@@ -25,10 +25,8 @@ class DynamicArray
   # O(1)
   def pop
     raise 'index out of bounds' if @length.zero?
-    popped_item = @store[length - 1]
-    @store[length - 1] = nil
     @length -= 1
-    popped_item
+    @store[length]
   end
 
   # O(1) ammortized; O(n) worst case. Variable because of the possible
@@ -36,12 +34,10 @@ class DynamicArray
   def push(val)
     # Check capacity, resize if necessary
     if @length == @capacity
-      new_store = StaticArray.new(@capacity * 2)
-      @length.times do |idx|
-        new_store[idx] = @store[idx]
-      end
-      @store = new_store
       @capacity *= 2
+      new_store = StaticArray.new(@capacity)
+      @length.times { |idx| new_store[idx] = @store[idx] }
+      @store = new_store
     end
 
     @store[@length] = val
