@@ -66,12 +66,10 @@ class RingBuffer
   end
 
   def resize!
-    # debugger
     @start_idx += @capacity
     @capacity *= 2
     new_store = StaticArray.new(capacity)
     @length.times { |idx| new_store[idx] = @store[idx] }
     @store = new_store
-    # debugger
   end
 end
