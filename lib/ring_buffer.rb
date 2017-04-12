@@ -5,17 +5,22 @@ class RingBuffer
 
   def initialize
     @length = 0
-    @capacity = 0
+    @capacity = 8
+    @start_idx = 0
+    @store = StaticArray.new(@capacity)
   end
 
   # O(1)
   def [](index)
     check_index(index)
+    physical_index = (index + @start_idx) % @capacity
+    @store[physical_index]
   end
 
   # O(1)
   def []=(index, val)
-    @store[index] = val
+    physical_index = (index + @start_idx) % @capacity
+    @store[physical_index] = val
   end
 
   # O(1)
@@ -27,15 +32,17 @@ class RingBuffer
   # O(1) ammortized
   def push(val)
     resize! if @length == @capacity
-    self[@length] = val
     @length += 1
+    self[@length - 1] = val
   end
 
   # O(1)
+  # Remove
   def shift
   end
 
   # O(1) ammortized
+  # Add
   def unshift(val)
   end
 
