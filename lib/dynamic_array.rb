@@ -16,10 +16,14 @@ class DynamicArray
 
   # O(1)
   def []=(index, value)
+    raise 'index out of bounds' if index >= @length
+    @store[index] = value
+    @length += 1
   end
 
   # O(1)
   def pop
+    raise 'index out of bounds' if @length.zero?
   end
 
   # O(1) ammortized; O(n) worst case. Variable because of the possible
@@ -29,6 +33,7 @@ class DynamicArray
 
   # O(n): has to shift over all the elements.
   def shift
+    raise 'index out of bounds' if @length.zero?
   end
 
   # O(n): has to shift over all the elements.
