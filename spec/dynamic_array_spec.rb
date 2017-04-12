@@ -1,4 +1,5 @@
 require "dynamic_array"
+require "byebug"
 
 describe DynamicArray do
   it "starts out empty" do

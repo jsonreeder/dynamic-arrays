@@ -1,4 +1,5 @@
 require_relative "static_array"
+require "byebug"
 
 class DynamicArray
   attr_reader :length
@@ -45,12 +46,37 @@ class DynamicArray
   end
 
   # O(n): has to shift over all the elements.
+  # Remove
   def shift
     raise 'index out of bounds' if @length.zero?
+
+    shifted_item = @store[0]
+
+    # Shift over elements to the left
+    new_store = StaticArray.new(@capacity)
+    @length.times do |idx|
+      next if idx.zero?
+      new_store[idx - 1] = @store[idx]
+    end
+
+    @store = new_store
+    @length -= 1
+    shifted_item
   end
 
   # O(n): has to shift over all the elements.
+  # Add
   def unshift(val)
+
+    # Shift over elements to the right
+    @capacity += 1
+    new_store = StaticArray.new(@capacity)
+    @length.times { |idx| new_store[idx + 1] = @store[idx] }
+    @store = new_store
+
+    # Add value
+    @store[0] = val
+    @length += 1
   end
 
   protected
