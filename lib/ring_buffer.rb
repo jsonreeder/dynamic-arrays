@@ -25,6 +25,7 @@ class RingBuffer
 
   # O(1)
   def pop
+    raise 'index out of bounds' if @length.zero?
     popped_value = self[@length - 1]
     @length -= 1
     popped_value
@@ -40,6 +41,7 @@ class RingBuffer
   # O(1)
   # Remove
   def shift
+    raise 'index out of bounds' if @length.zero?
     shifted_value = self[0]
     @length -= 1
     @start_idx += 1
