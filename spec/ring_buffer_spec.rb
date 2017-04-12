@@ -16,7 +16,6 @@ describe RingBuffer do
 
     expect(arr.length).to eq(5)
     5.times { |i| expect(arr[i]) == i }
-    debugger
 
     4.downto(0) do |i|
       expect(arr.pop).to eq(i)

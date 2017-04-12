@@ -25,8 +25,9 @@ class RingBuffer
 
   # O(1)
   def pop
+    popped_value = self[@length - 1]
     @length -= 1
-    @store[@length]
+    popped_value
   end
 
   # O(1) ammortized
